@@ -1,114 +1,124 @@
 <!DOCTYPE html>
 <head>
-<title>AP Ticket</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-<link rel="stylesheet" href="../styles.css">
-
+  <title>AP Ticket</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+  <meta name="description" content="Formal Afterparty Ticket" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="msapplication-TileColor" content="#34a0a4" />
+  <meta name="theme-color" content="#ffffff" />
 </head>
 <body>
-    <div id="frameContainer">
+  <div id="frameContainer">
     <div class="autoheight" id="frame">
-        <div class="top">
-            <h1>2024 Formal Afterparty</h1><br>
-            <div id="topseperator" class="seperator top">
-                <div class="line leftline"></div>
-                <div class="btext"><p>Ticket</p></div>
-                <div class="line rightline"></div>
-            </div>
-			<p class="psts">Please keep the link you used to access your ticket or take a screenshot of this page</p>
-			<div id="qrcodediv">
-            	<div id="qrcode"></div>
-		</div>
-		<h1 id="name"></h1>
-		<div id="findmyticket"> <br><button class="payment" onclick="window.location.href = '../alreadypaid/'"><span class="text">Find My Ticket</span></button></div>
+      <div class="top">
+        <h1>2024 Formal Afterparty</h1>
+        <br />
+        <div id="topseperator" class="seperator top">
+          <div class="line leftline"></div>
+          <div class="btext"><p>Ticket</p></div>
+          <div class="line rightline"></div>
         </div>
+        <p class="psts">Please keep the link you used to access your ticket or take a screenshot of this page</p>
+        <div id="qrcodediv">
+          <div id="qrcode"></div>
+        </div>
+        <h1 id="name"></h1>
+        <div id="findmyticket">
+          <br />
+          <button class="payment" onclick="window.location.href = '../alreadypaid/'"><span class="text">Find My Ticket</span></button>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 
-<script type="text/javascript" src="jquery.min.js"></script>
-<script type="text/javascript" src="qrcode.js"></script>
-<script type="text/javascript">
-    window.onload = function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        let codeParam = urlParams.get('code');
-        const qrcodeElement = document.getElementById("qrcode");
-        const qrcode = new QRCode(document.getElementById("qrcode"), {
-	colorDark : "#353434",
-	colorLight : "#52b69a",
-});
+  <script type="text/javascript" src="jquery.min.js"></script>
+  <script type="text/javascript" src="qrcode.js"></script>
+  <script type="text/javascript">
+    window.onload = function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      let codeParam = urlParams.get("code");
+      const qrcodeElement = document.getElementById("qrcode");
+      const qrcode = new QRCode(document.getElementById("qrcode"), {
+        colorDark: "#353434",
+        colorLight: "#52b69a",
+      });
 
-        function makeCode() {
-            qrcode.makeCode(codeParam);
-        }
+      function makeCode() {
+        qrcode.makeCode(codeParam);
+      }
 
-        function clearUrlParameter() {
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
+      function clearUrlParameter() {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
 
-        function redirectToPreviousPage() {
-            alert('No code found. Please check the link in your email');
-            window.location.href = '../index.html'; // Adjust the URL to match your previous directory's index.html
-        }
+      function redirectToPreviousPage() {
+        alert("No code found. Please check the link in your email");
+        window.location.href = "../index.html"; // Adjust the URL to match your previous directory's index.html
+      }
 
-        function storeCodeToLocalStorage(code) {
-            localStorage.setItem('code', code);
-        }
+      function storeCodeToLocalStorage(code) {
+        localStorage.setItem("code", code);
+      }
 
-        function getCodeFromLocalStorage() {
-            return localStorage.getItem('code');
-        }
+      function getCodeFromLocalStorage() {
+        return localStorage.getItem("code");
+      }
 
-        function displayUserName(name) {
-            const nameElement = document.getElementById("name");
-            nameElement.textContent = name;
-        }
+      function displayUserName(name) {
+        const nameElement = document.getElementById("name");
+        nameElement.textContent = name;
+      }
 
-        function getNameFromServer(code) {
-		    fetch('https://aptapi.joshnewman6.com/apt/getName', {
-		        method: 'POST',
-		        headers: {
-		            'Content-Type': 'application/json'
-		        },
-		        body: JSON.stringify({ id: code })
-		    })
-		    .then(response => {
-		        if (!response.ok) {
-		            if (response.status === 404) {
-		                throw new Error('Unknown Ticket');
-		            } else {
-		                throw new Error('Failed to fetch');
-		            }
-		        }
-		        return response.json();
-		    })
-		    .then(data => {
-		        displayUserName(data.name);
-		    })
-		    .catch(error => {
-		        console.error('Error:', error);
-		        document.getElementById('qrcode').style.backgroundColor = 'rgba(255, 99, 71, 0.7)';
-				document.getElementById('findmyticket').style.display = 'block';
-		        displayUserName('Unknown Ticket');
-		    });
-		}
-
-
-        if (codeParam) {
-            makeCode();
-            storeCodeToLocalStorage(codeParam);
-            clearUrlParameter();
-            getNameFromServer(codeParam);
-        } else {
-            codeParam = getCodeFromLocalStorage();
-            if (codeParam) {
-                makeCode();
-                getNameFromServer(codeParam);
-            } else {
-                redirectToPreviousPage();
+      function getNameFromServer(code) {
+        fetch("https://aptapi.joshnewman6.com/apt/getName", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: code }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              if (response.status === 404) {
+                throw new Error("Unknown Ticket");
+              } else {
+                throw new Error("Failed to fetch");
+              }
             }
-        }
-    };
-</script>
+            return response.json();
+          })
+          .then((data) => {
+            displayUserName(data.name);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("qrcode").style.backgroundColor = "rgba(255, 99, 71, 0.7)";
+            document.getElementById("findmyticket").style.display = "block";
+            displayUserName("Unknown Ticket");
+          });
+      }
 
+      if (codeParam) {
+        makeCode();
+        storeCodeToLocalStorage(codeParam);
+        clearUrlParameter();
+        getNameFromServer(codeParam);
+      } else {
+        codeParam = getCodeFromLocalStorage();
+        if (codeParam) {
+          makeCode();
+          getNameFromServer(codeParam);
+        } else {
+          redirectToPreviousPage();
+        }
+      }
+    };
+  </script>
 </body>
