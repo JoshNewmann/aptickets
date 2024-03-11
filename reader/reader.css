@@ -44,3 +44,7 @@ video {
     border-width: 0;
     border-color: #353434;
 }
+
+#html5-qrcode-anchor-scan-type-change {
+    display: none !important;
+}
