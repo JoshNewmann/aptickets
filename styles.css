@@ -1,0 +1,228 @@
+@font-face {
+    font-family: "Open Sans";
+    src: url(fonts/WOFF2/OpenSans-Bold.woff2) format("woff2"), url(fonts/WOFF/OpenSans-Bold.woff) format("woff");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Open Sans";
+    src: url(fonts/WOFF2/OpenSans-Regular.woff2) format("woff2"), url(fonts/WOFF/OpenSans-Regular.woff) format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+    background-color: #111111;
+    margin: 0;
+    color: white;
+}
+
+#frame {
+    background-color: #353434;
+    max-width: 600px;
+    width: 85%;
+    padding: 20px;
+    height: 83vh;
+    height: 88svh;
+    margin: 0 auto; /* Center horizontally */
+    margin-top: 2.5vh;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    border-radius: 25px;
+    text-align: center;
+    flex-direction: column;
+}
+
+.autoheight {
+    height: auto !important;
+}
+
+h1 {
+    margin: 0;
+}
+
+#topseperator {
+    margin-top: -15px;
+}
+
+.top {
+    margin-bottom: auto;
+}
+
+.bottom {
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+.payment {
+    align-items: center;
+    background-image: linear-gradient(144deg, #34a0a4, #52b69a 50%, #76c893);
+    border: 0;
+    border-radius: 18px;
+    box-sizing: border-box;
+    color: #ffffff;
+    display: flex;
+    font-family: Phantomsans, sans-serif;
+    font-size: 20px;
+    justify-content: center;
+    line-height: 1em;
+    max-width: 100%;
+    min-width: 140px;
+    padding: 3px;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 15px;
+}
+
+.payment:active,
+.payment:hover {
+    outline: 0;
+}
+
+.payment span {
+    background-color: #111111;
+    padding: 12px 24px; /* Adjust padding to decrease the height */
+    border-radius: 14px;
+    width: 100%;
+    height: 100%;
+    transition: 300ms;
+}
+
+
+.payment:hover span {
+    background: none;
+}
+
+.payment:first-of-type {
+    margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+    .payment {
+        font-size: 24px;
+        min-width: 196px;
+    }
+}
+
+.line {
+    width: 100%;
+    height: 2px;
+    background-color: #52b69a;
+    z-index: 100;
+    margin: 30px 0 0px 0;
+    border-radius: 100px;
+}
+
+
+.btext {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.leftline {
+    margin-right: 20px;
+}
+
+.rightline {
+    margin-left: 20px;
+}
+
+.seperator {
+    display: flex;
+}
+
+#cardlink {
+    margin-bottom: 0px;
+    color: #52b69a;
+}
+
+#cardlink:hover {
+    cursor: pointer;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    max-height: 200px;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2vh;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    color: #34a0a4;
+}
+
+.icon-text {
+    font-size: 18px;
+    margin-bottom: px;
+}
+
+.input-payment {
+    font-size: 14px;
+    border-radius: 6px;
+    line-height: 1.5;
+    padding: 5px 10px;
+    transition: box-shadow 100ms ease-in, border 100ms ease-in, background-color 100ms ease-in;
+    border: 2px solid #dee1e2;
+    color: rgb(14, 14, 16);
+    background: #dee1e2;
+    display: block;
+    height: 36px;
+    width: 100%;
+}
+
+.input-payment:hover {
+    border-color: #ccc;
+}
+
+.input-payment:focus{
+    border-color: #9147ff;
+    background: #fff;
+}
+
+#qrcodediv {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+#name {
+    font-style: italic;
+    font-size: 25px;
+    margin-top: 10px;
+}
+
+#foundticket {
+    margin-top: -20px;
+}
+
+#alreadygotticket {
+    display: none;
+    padding-bottom: 10px;
+}
+
+.psts {
+    margin-top: -5px;
+}
+
+#findmyticket {
+    display: none;
+}
