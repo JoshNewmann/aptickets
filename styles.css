@@ -205,6 +205,12 @@ h1 {
     margin: 0;
 }
 
+#qrcode {
+    border-width: 20px;
+    border-color: #fff;
+    border-style: solid;
+}
+
 #name {
     font-style: italic;
     font-size: 25px;

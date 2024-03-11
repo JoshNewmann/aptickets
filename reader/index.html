@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+  <title>AP Ticket</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+  <meta name="description" content="Formal Afterparty Ticket" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="msapplication-TileColor" content="#34a0a4" />
+  <meta name="theme-color" content="#ffffff" />
+</head>
+<body>
+  <div id="frameContainer">
+    <div class="autoheight" id="frame">
+      <div class="top">
+        <h1>Ticket Scanner</h1>
+        <br />
+        <div id="topseperator" class="seperator top">
+          <div class="line leftline"></div>
+          <div class="btext"><p>Scanner</p></div>
+          <div class="line rightline"></div>
+        </div>
+        <div id="qrcodediv">
+          <div style="width: 500px" id="reader"></div>
+        </div>
+        <h1 id="name"></h1>
+        <div id="findmyticket">
+          <br />
+          <button class="payment" onclick="window.location.href = '../alreadypaid/'"><span class="text">Find My Ticket</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="html5-qrcode.min.js"></script>
+  <script type="text/javascript" src="jquery.min.js"></script>
+  <script type="text/javascript" src="qrcode.js"></script>
+  <script type="text/javascript">
+    function onScanSuccess(decodedText, decodedResult) {
+    // Handle on success condition with the decoded text or result.
+    console.log(`Scan result: ${decodedText}`, decodedResult);
+    }
+
+var html5QrcodeScanner = new Html5QrcodeScanner(
+	"reader", { fps: 10, qrbox: 250 });
+html5QrcodeScanner.render(onScanSuccess);
+  </script>
+</body>
