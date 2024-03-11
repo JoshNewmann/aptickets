@@ -54,11 +54,10 @@ function scan(id) {
         return;
     }
 
-    clearTicksAndCrosses();
-
     // Check if ID is different from last input
     if (id !== lastInput) {
-        // Make AJAX call to server with password and id
+        clearTicksAndCrosses();
+        
         fetch('https://aptapi.joshnewman6.com/apt/checkTicket', {
             method: 'POST',
             headers: {
