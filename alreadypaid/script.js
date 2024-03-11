@@ -11,7 +11,7 @@ function resendEmail() {
         return;
     }
 
-    fetch('http://192.168.1.207:3001/apt/resendEmail', {
+    fetch('https://aptapi.joshnewman6.com/apt/resendEmail', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ window.onload = function() {
     let firstName = '';
 
     function getNameFromServer(code) {
-        fetch('http://192.168.1.207:3001/apt/getName', {
+        fetch('https://aptapi.joshnewman6.com/apt/getName', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
