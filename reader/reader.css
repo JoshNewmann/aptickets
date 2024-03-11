@@ -48,3 +48,29 @@ video {
 #html5-qrcode-anchor-scan-type-change {
     display: none !important;
 }
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+#tick {
+    font-size: 6rem;
+}
+
+#tick.success {
+    color: green;
+}
+
+#tick.failure {
+    color: red;
+}
+
+#name {
+    font-size: 1.5rem;
+    margin-top: 20px;
+}

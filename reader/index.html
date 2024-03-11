@@ -38,13 +38,87 @@
   </div>
   <script src="html5-qrcode.min.js"></script>
   <script type="text/javascript">
+    let password;
+let lastInput;
+
+// Function to prompt for password on page load
+window.onload = function() {
+    password = prompt("Enter the password:");
+}
+
+// Function to scan ID and display result
+function scan(id) {
+    // Check if password is set
+    if (!password) {
+        alert("Please enter the password first.");
+        return;
+    }
+
+    // Check if ID is different from last input
+    if (id !== lastInput) {
+        // Make AJAX call to server with password and id
+        fetch('https://aptapi.joshnewman6.com/apt/checkTicket', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: id, password: password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.name) {
+                displaySuccess(data.name);
+            } else {
+                displayFailure();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            displayFailure();
+        });
+
+        lastInput = id;
+    }
+}
+
+// Function to display success
+function displaySuccess(name) {
+    const tickElement = document.getElementById('tick');
+    tickElement.classList.add('success');
+    tickElement.innerText = '✓';
+
+    const nameElement = document.getElementById('name');
+    nameElement.innerText = `Scanned Name: ${name}`;
+
+    // Remove tick after 3 seconds (3000 milliseconds)
+    setTimeout(() => {
+        tickElement.remove();
+        nameElement.innerText = '';
+    }, 1000);
+}
+
+// Function to display failure
+function displayFailure() {
+    const tickElement = document.getElementById('tick');
+    tickElement.classList.add('failure');
+    tickElement.innerText = '✕';
+
+    const nameElement = document.getElementById('name');
+    nameElement.innerText = '';
+
+    // Remove cross after 3 seconds (3000 milliseconds)
+    setTimeout(() => {
+        tickElement.remove();
+    }, 1000);
+}
+
     function onScanSuccess(decodedText, decodedResult) {
     // Handle on success condition with the decoded text or result.
     console.log(`Scan result: ${decodedText}`, decodedResult);
     }
 
-var html5QrcodeScanner = new Html5QrcodeScanner(
-	"reader", { fps: 10, qrbox: 250 });
-html5QrcodeScanner.render(onScanSuccess);
+    var html5QrcodeScanner = new Html5QrcodeScanner(
+    	"reader", { fps: 20, qrbox: 250 });
+    html5QrcodeScanner.render(onScanSuccess);
   </script>
 </body>
