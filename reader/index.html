@@ -128,6 +128,7 @@ function displayFailure() {
     function onScanSuccess(decodedText, decodedResult) {
     // Handle on success condition with the decoded text or result.
     console.log(`Scan result: ${decodedText}`, decodedResult);
+    scan(decodedText);
     }
 
     var html5QrcodeScanner = new Html5QrcodeScanner(
