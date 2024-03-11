@@ -54,6 +54,8 @@ function scan(id) {
         return;
     }
 
+    clearTicksAndCrosses();
+
     // Check if ID is different from last input
     if (id !== lastInput) {
         // Make AJAX call to server with password and id
@@ -67,7 +69,7 @@ function scan(id) {
         .then(response => response.json())
         .then(data => {
             if (data.name) {
-                displaySuccess(data.name);
+                displaySuccess();
             } else {
                 displayFailure();
             }
@@ -81,35 +83,46 @@ function scan(id) {
     }
 }
 
-// Function to display success
-function displaySuccess(name) {
-    const tickElement = document.getElementById('tick');
-    tickElement.classList.add('success');
-    tickElement.innerText = '✓';
+function clearTicksAndCrosses() {
+    // Select all elements with class 'tick' or 'cross'
+    const tickElements = document.querySelectorAll('.tick');
+    const crossElements = document.querySelectorAll('.cross');
 
-    const nameElement = document.getElementById('name');
-    nameElement.innerText = `Scanned Name: ${name}`;
+    // Remove tick elements
+    tickElements.forEach(element => {
+        element.remove();
+    });
+
+    // Remove cross elements
+    crossElements.forEach(element => {
+        element.remove();
+    });
+}
+
+// Function to display success
+function displaySuccess() {
+    const tickElement = document.createElement('div');
+    tickElement.innerText = '✓';
+    tickElement.classList.add('tick');
+    document.body.appendChild(tickElement);
 
     // Remove tick after 3 seconds (3000 milliseconds)
     setTimeout(() => {
         tickElement.remove();
-        nameElement.innerText = '';
-    }, 1000);
+    }, 3000);
 }
 
 // Function to display failure
 function displayFailure() {
-    const tickElement = document.getElementById('tick');
-    tickElement.classList.add('failure');
-    tickElement.innerText = '✕';
-
-    const nameElement = document.getElementById('name');
-    nameElement.innerText = '';
+    const crossElement = document.createElement('div');
+    crossElement.innerText = '✕';
+    crossElement.classList.add('cross');
+    document.body.appendChild(crossElement);
 
     // Remove cross after 3 seconds (3000 milliseconds)
     setTimeout(() => {
-        tickElement.remove();
-    }, 1000);
+        crossElement.remove();
+    }, 3000);
 }
 
     function onScanSuccess(decodedText, decodedResult) {

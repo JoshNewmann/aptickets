@@ -49,28 +49,29 @@ video {
     display: none !important;
 }
 
-body {
+.tick,
+.cross {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 4rem; /* Larger font size */
+    width: 80px; /* Set width to ensure circular outline */
+    height: 80px; /* Set height to ensure circular outline */
+    border: 4px solid; /* Add border for circle outline */
+    border-radius: 50%; /* Make it a circle */
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
+    z-index: 9999; /* Ensure it appears on top of other elements */
 }
 
-#tick {
-    font-size: 6rem;
+.tick {
+    color: green; /* Green color for success */
+    border-color: green; /* Green color for circle outline */
 }
 
-#tick.success {
-    color: green;
-}
-
-#tick.failure {
-    color: red;
-}
-
-#name {
-    font-size: 1.5rem;
-    margin-top: 20px;
+.cross {
+    color: red; /* Red color for failure */
+    border-color: red; /* Red color for circle outline */
 }
