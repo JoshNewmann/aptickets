@@ -1,6 +1,7 @@
 function showCodeInput() {
     const userInput = prompt('Please enter the code you want to redeem');
     if (userInput) {
+        localStorage.removeItem('code');
         window.location.href = `../ticket/?code=${encodeURIComponent(userInput)}`;
     }
 }
@@ -11,7 +12,7 @@ function resendEmail() {
         return;
     }
 
-    fetch('https://aptapi.joshnewman6.com/apt/resendEmail', {
+    fetch('https://royalflush.joshnewman6.com/apt/resendEmail', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -52,7 +53,7 @@ window.onload = function() {
     let firstName = '';
 
     function getNameFromServer(code) {
-        fetch('https://aptapi.joshnewman6.com/apt/getName', {
+        fetch('https://royalflush.joshnewman6.com/apt/getName', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
