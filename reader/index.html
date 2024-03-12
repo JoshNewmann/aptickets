@@ -42,15 +42,13 @@
   </div>
   <script src="html5-qrcode.min.js"></script>
   <script type="text/javascript">
-    let password;
+    let password = localStorage.getItem('password');
     let lastInput;
 
     const lastScanParagraph = document.getElementById('lastscan');
 
 // Function to prompt for password on page load
 window.onload = function() {
-    let password = localStorage.getItem('password');
-
     if (!password) {
         password = prompt("Enter the password:");
         localStorage.setItem('password', password);
