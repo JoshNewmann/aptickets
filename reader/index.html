@@ -20,12 +20,12 @@
       <div class="top">
         <h1>Ticket Scanner</h1>
         <br />
-        <p id="lastscan">Your most recent scan will appear here</p>
         <div id="topseperator" class="seperator top">
           <div class="line leftline"></div>
           <div class="btext"><p>Scanner</p></div>
           <div class="line rightline"></div>
         </div>
+        <p id="lastscan">Your most recent scan will appear here</p>
         <div id="qrcodediv">
           <div style="width: 500px" id="reader"></div>
         </div>
@@ -62,15 +62,12 @@ function setPassword() {
         localStorage.setItem('password', password);
 }
 
-// Function to scan ID and display result
 function scan(id) {
-    // Check if password is set
     if (!password) {
         alert("Please enter the password first.");
         return;
     }
 
-    // Check if ID is different from last input
     if (id !== lastInput) {
         clearTicksAndCrosses();
         
@@ -81,7 +78,13 @@ function scan(id) {
             },
             body: JSON.stringify({ id: id, password: password })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (response.status === 401) {
+                alert("Invalid password");
+                throw new Error("Invalid password");
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.name) {
                 lastScanParagraph.textContent = "Last ticket scanned: " + data.name;
