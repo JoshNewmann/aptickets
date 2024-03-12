@@ -20,6 +20,7 @@
       <div class="top">
         <h1>Ticket Scanner</h1>
         <br />
+        <p id="lastscan">Your most recent scan will appear here</p>
         <div id="topseperator" class="seperator top">
           <div class="line leftline"></div>
           <div class="btext"><p>Scanner</p></div>
@@ -33,17 +34,32 @@
           <br />
           <button class="payment" onclick="window.location.href = '../alreadypaid/'"><span class="text">Find My Ticket</span></button>
         </div>
+        <div id="readerButtons">
+          <button class="payment" onclick="setPassword()"><span class="text">Use Another Password</span></button>
+        </div>
       </div>
     </div>
   </div>
   <script src="html5-qrcode.min.js"></script>
   <script type="text/javascript">
     let password;
-let lastInput;
+    let lastInput;
+
+    const lastScanParagraph = document.getElementById('lastscan');
 
 // Function to prompt for password on page load
 window.onload = function() {
-    password = prompt("Enter the password:");
+    let password = localStorage.getItem('password');
+
+    if (!password) {
+        password = prompt("Enter the password:");
+        localStorage.setItem('password', password);
+    }
+}
+
+function setPassword() {
+        password = prompt("Enter the password:");
+        localStorage.setItem('password', password);
 }
 
 // Function to scan ID and display result
@@ -68,8 +84,10 @@ function scan(id) {
         .then(response => response.json())
         .then(data => {
             if (data.name) {
+                lastScanParagraph.textContent = "Last ticket scanned: " + data.name;
                 displaySuccess();
             } else {
+                lastScanParagraph.textContent = "Last ticket scanned: Invalid";
                 displayFailure();
             }
         })
