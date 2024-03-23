@@ -58,6 +58,7 @@ function setPassword() {
     const newPassword = prompt("Please enter the password:");
     if (newPassword !== null && newPassword !== "") {
         localStorage.setItem('password', newPassword);
+        password = newPassword;
     } else {
         alert("Password not set. You need to set a password to proceed.");
     }
