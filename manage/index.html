@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function setPassword() {
-    const newPassword = prompt("Please enter a new password:");
+    const newPassword = prompt("Please enter the password:");
     if (newPassword !== null && newPassword !== "") {
         localStorage.setItem('password', newPassword);
     } else {
