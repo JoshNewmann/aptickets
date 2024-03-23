@@ -70,7 +70,7 @@ window.onload = function() {
                 } else {
                     firstName = data.name;
                 }
-                document.getElementById('foundticket').style.display = 'block';
+                document.getElementById('topseperator').style.display = 'block';
                 document.getElementById('foundticketmessage').textContent = `Hi ${firstName}, click the button below to view your ticket`;
             } else {
                 console.error('Name not found in response.');
