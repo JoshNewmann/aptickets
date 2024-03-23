@@ -65,6 +65,7 @@ video {
     align-items: center;
     z-index: 9999; /* Ensure it appears on top of other elements */
     background-color: white; /* Set background color to white */
+    margin-bottom: 30px;
 }
 
 .tick {
@@ -84,4 +85,32 @@ video {
 
 #readerButtons {
     margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#html5-qrcode-button-camera-stop {
+    margin-bottom: 0px
+}
+
+.payment {
+    margin-bottom: 10px;
+}
+
+.success-container {
+    position: fixed;
+    bottom: 3%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 128, 0, 0.8); /* Green color with some opacity */
+    color: #fff; /* White text color */
+    padding: 10px 20px; /* Padding around the content */
+    border-radius: 20px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow for a slight depth effect */
+    z-index: 1000; /* Ensure it's on top of other elements */
+    display: flex;
+    align-items: center;
+}
+
+.name {
+    font-size: 16px; /* Size of the name */
 }

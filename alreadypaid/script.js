@@ -12,7 +12,7 @@ function resendEmail() {
         return;
     }
 
-    fetch('https://royalflush.joshnewman6.com/apt/resendEmail', {
+    fetch('https://aptapi.joshnewman6.com/apt/resendEmail', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -50,10 +50,9 @@ function redirectToTicketPage() {
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
     let codeParam = urlParams.get('code');
-    let firstName = '';
 
     function getNameFromServer(code) {
-        fetch('https://royalflush.joshnewman6.com/apt/getName', {
+        fetch('https://aptapi.joshnewman6.com/apt/getName', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -63,8 +62,13 @@ window.onload = function() {
         .then(response => response.json())
         .then(data => {
             if (data && data.name) {
-                firstName = data.name.split(' ')[0]; // Assuming name is in the format "First Last"
-                document.getElementById('alreadygotticket').style.display = 'block';
+                let firstName;
+                if (data.name.includes(' ')) {
+                    firstName = data.name.split(' ')[0];
+                } else {
+                    firstName = data.name;
+                }
+                document.getElementById('foundticket').style.display = 'block';
                 document.getElementById('foundticketmessage').textContent = `Hi ${firstName}, click the button below to view your ticket`;
             } else {
                 console.error('Name not found in response.');

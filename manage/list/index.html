@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+  <title>All Tickets</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+  <meta name="description" content="Formal Afterparty Ticket" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href=".././reader.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="msapplication-TileColor" content="#34a0a4" />
+  <meta name="theme-color" content="#ffffff" />
+</head>
+<body>
+  <div id="frameContainer">
+    <div class="autoheight" id="frame">
+      <div class="top">
+        <h1>Ticket List</h1>
+        <br />
+        <p id="backtoinfo" class="nomargin backbutton" onclick="window.location.href = '../'">
+            <svg id="backarrow" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24" width="24" height="24" fill="currentColor">
+              <path
+                d="M10 20C4.477 20 0 15.523 0 10S4.477 0 10 0s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM8.414 9H14a1 1 0 0 1 0 2H8.414l2.536 2.536a1 1 0 0 1-1.414 1.414l-4.243-4.243a.997.997 0 0 1 0-1.414L9.536 5.05a1 1 0 0 1 1.414 1.414L8.414 9z"
+              />
+            </svg>
+            Go back
+          </p>
+        <div id="topseperator" class="seperator top">
+          <div class="line leftline"></div>
+          <div class="btext"><p>All</p></div>
+          <div class="line rightline"></div>
+        </div>
+        <p class="nomargin">Tickets with a line through them have already been scanned. To revalidate a ticket, <a href="#" onclick="revalidateTicket()">click here</a></p><br>
+        <p id="allTickets"></p>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

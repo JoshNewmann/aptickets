@@ -45,7 +45,7 @@ h1 {
 }
 
 #topseperator {
-    margin-top: -15px;
+    margin-top: -10px;
 }
 
 .top {
@@ -102,13 +102,6 @@ h1 {
 
 .payment:first-of-type {
     margin-bottom: 10px;
-}
-
-@media (min-width: 768px) {
-    .payment {
-        font-size: 24px;
-        min-width: 196px;
-    }
 }
 
 .line {
@@ -256,4 +249,21 @@ h1 {
 
 #backarrow:hover {
     cursor: pointer;
+}
+
+#backtoinfo {
+    margin-bottom: 15px;
+}
+
+#tickettext {
+    margin-bottom: -10px;
+    padding-bottom: 0px;
+}
+
+#allTickets {
+    margin-top: 0;
+}
+
+a {
+    color: #52b69a;
 }

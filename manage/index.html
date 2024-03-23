@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<head>
+  <title>AP Ticket</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+  <meta name="description" content="Formal Afterparty Ticket" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="./reader.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="msapplication-TileColor" content="#34a0a4" />
+  <meta name="theme-color" content="#ffffff" />
+</head>
+<body>
+  <div id="frameContainer">
+    <div class="autoheight" id="frame">
+      <div class="top">
+        <h1>Ticket Scanner</h1>
+        <br />
+        <div id="topseperator" class="seperator top">
+          <div class="line leftline"></div>
+          <div class="btext"><p>Scanner</p></div>
+          <div class="line rightline"></div>
+        </div>
+        <p id="lastscan">Your most recent scan will appear here</p>
+        <div id="qrcodediv">
+          <div style="width: 500px" id="reader"></div>
+        </div>
+        <h1 id="name"></h1>
+        <div id="findmyticket">
+          <br />
+          <button class="payment" onclick="window.location.href = '../alreadypaid/'"><span class="text">Find My Ticket</span></button>
+        </div>
+        <div id="readerButtons">
+            <button class="payment" onclick="window.location.href = '/manage/list/'"><span class="text">View All Tickets</span></button>
+            <button class="payment" onclick="createTicket()"><span class="text">Create a Ticket</span></button>
+            <button class="payment" onclick="setPassword()"><span class="text">Use Another Password</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="html5-qrcode.min.js"></script>
+  <script type="text/javascript">
+let lastInput;
+let password = localStorage.getItem('password');
+const lastScanParagraph = document.getElementById('lastscan');
+
+window.onload = function() {
+    if (password === null) {
+        setPassword();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (password === null) {
+        setPassword();
+    }
+});
+
+function setPassword() {
+    const newPassword = prompt("Please enter a new password:");
+    if (newPassword !== null && newPassword !== "") {
+        localStorage.setItem('password', newPassword);
+    } else {
+        alert("Password not set. You need to set a password to proceed.");
+    }
+}
+
+function playSound(soundName) {
+    const soundFile = soundName + '.mp3';
+    const audio = new Audio(soundFile);
+    audio.play();
+}
+
+function scan(id) {
+    if (!password) {
+        alert("Please enter the password first.");
+        return;
+    }
+
+    if (id !== lastInput) {
+        clearTicksAndCrosses();
+        
+        fetch('https://aptapi.joshnewman6.com/apt/checkTicket', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: id, password: password })
+        })
+        .then(response => {
+            if (response.status === 401) {
+                alert("Invalid password");
+                throw new Error("Invalid password");
+            }
+            if (response.status === 410) {
+                return response.json();
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.name) {
+                lastScanParagraph.textContent = "Last ticket scanned: " + data.name;
+                playSound("success");
+                displaySuccess(data.name);
+            } else if (data.message) {
+                lastScanParagraph.textContent = "Last ticket scanned: Already Used";
+                playSound("error");
+                displayFailure();
+                setTimeout(function() {
+                alert(data.message);
+                }, 250);
+            } else {
+                lastScanParagraph.textContent = "Last ticket scanned: Invalid";
+                playSound("error");
+                displayFailure();
+            }
+            lastScanParagraph.style.fontWeight = 'bold';
+            lastScanParagraph.style.fontStyle = 'italic';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            displayFailure();
+        });
+
+        lastInput = id;
+    }
+}
+
+
+function clearTicksAndCrosses() {
+    const tickElements = document.querySelectorAll('.tick');
+    const crossElements = document.querySelectorAll('.cross');
+    const successcontainerElements = document.querySelectorAll('.success-container');
+
+    tickElements.forEach(element => {
+        element.remove();
+    });
+
+    crossElements.forEach(element => {
+        element.remove();
+    });
+
+    successcontainerElements.forEach(element => {
+        element.remove();
+    });
+}
+
+function displaySuccess(name) {
+    // Create a container for the tick and name
+    const container = document.createElement('div');
+    container.classList.add('success-container');
+
+    // Create tick element
+    const tickElement = document.createElement('div');
+    tickElement.innerText = '✓';
+    tickElement.classList.add('tick');
+    
+    // Create name element
+    const nameElement = document.createElement('div');
+    nameElement.innerText = name;
+    nameElement.classList.add('name');
+
+    // Append tick and name elements to the container
+    container.appendChild(tickElement);
+    container.appendChild(nameElement);
+
+    // Append the container to the body
+    document.body.appendChild(container);
+
+    // Remove container after 3 seconds (3000 milliseconds)
+    setTimeout(() => {
+        container.remove();
+        lastScanParagraph.style.fontWeight = 'normal';
+        lastScanParagraph.style.fontStyle = 'normal';
+    }, 3000);
+}
+
+
+function displayFailure() {
+    const crossElement = document.createElement('div');
+    crossElement.innerText = '✕';
+    crossElement.classList.add('cross');
+    document.body.appendChild(crossElement);
+
+    // Remove cross after 3 seconds (3000 milliseconds)
+    setTimeout(() => {
+        crossElement.remove();
+        lastScanParagraph.style.fontWeight = 'normal';
+        lastScanParagraph.style.fontStyle = 'normal';
+
+    }, 3000);
+}
+
+function onScanSuccess(decodedText, decodedResult) {
+    // Handle on success condition with the decoded text or result.
+    console.log(`Scan result: ${decodedText}`, decodedResult);
+    scan(decodedText);
+    }
+
+    var html5QrcodeScanner = new Html5QrcodeScanner(
+    	"reader", { fps: 20, qrbox: 250 });
+    html5QrcodeScanner.render(onScanSuccess);
+
+function createTicket() {
+    // Prompt user for name
+    const name = prompt("Enter the name to be associated with the ticket");
+    
+    // If name is empty or user cancels, exit the function
+    if (!name) {
+        alert("Name cannot be empty. Ticket creation canceled.");
+        return;
+    }
+
+    // Prompt user for email
+    const email = prompt("Enter the email the ticket should be sent to");
+
+    // Retrieve password from localStorage
+    const password = localStorage.getItem('password');
+
+    // Prepare data to send to the server
+    const data = {
+        name: name,
+        email: email,
+        password: password
+    };
+
+    // Send data to the server
+    fetch('http://localhost:3001/apt/createTicket', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Failed to create ticket');
+        }
+    })
+    .then(data => {
+        console.log(data.message);
+        alert(data.message);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while creating the ticket. Please check your password.');
+    });
+}
+  </script>
+</body>
