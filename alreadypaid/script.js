@@ -47,6 +47,8 @@ function redirectToTicketPage() {
     window.location.href = '../ticket/';
 }
 
+document.getElementById('topseperator').style.display = 'none';
+
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
     let codeParam = urlParams.get('code');
@@ -91,6 +93,7 @@ window.onload = function() {
             getNameFromServer(codeParam);
         } else {
             console.error('No code found in local storage or URL parameters.');
+            document.getElementById("topseperator").style.display = "none";
         }
     }
 };
