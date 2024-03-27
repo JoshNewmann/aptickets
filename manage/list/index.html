@@ -30,10 +30,18 @@
           </p>
         <div id="topseperator" class="seperator top">
           <div class="line leftline"></div>
-          <div class="btext"><p>All</p></div>
+          <div class="btext"><p>Manage</p></div>
           <div class="line rightline"></div>
         </div>
-        <p class="nomargin">Tickets with a line through them have already been scanned. To revalidate a ticket, <a href="#" onclick="revalidateTicket()">click here</a></p><br>
+        <p class="nomargin">Tickets with a line through them have already been scanned. To revalidate a ticket, use the button below</p><br>
+        <button class="payment" onclick="revalidateTicket()"><span id="paymentButtonSpan" class="text">Revalidate a Ticket</span></button>
+        <button id="changeSortButton" class="payment" onclick="changeSort()"><span id="changeSortSpan" class="text">Change Sorting</span></button>
+        
+        <div id="topseperator" class="seperator top">
+          <div class="line leftline"></div>
+          <div class="btext"><p>List</p></div>
+          <div class="line rightline"></div>
+        </div>
         <p id="allTickets"></p>
       </div>
     </div>

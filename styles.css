@@ -267,3 +267,7 @@ h1 {
 a {
     color: #52b69a;
 }
+
+#changeSortButton {
+    margin-bottom: 20px;
+}

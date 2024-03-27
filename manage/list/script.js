@@ -21,8 +21,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .then(data => {
-            // Sort tickets alphabetically by name
-            data.sort((a, b) => a.name.localeCompare(b.name));
+            // Check if alphabetise value is true in localStorage
+            const alphabetise = localStorage.getItem('alphabetise');
+            
+            // Sort tickets alphabetically by name if alphabetise is true
+            if (alphabetise === 'true') {
+                data.sort((a, b) => a.name.localeCompare(b.name));
+            }
             
             // Display tickets in dot points in the <p> with id "allTickets"
             const allTicketsElement = document.getElementById('allTickets');
@@ -38,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 function revalidateTicket() {
     const password = localStorage.getItem('password');
@@ -80,3 +86,32 @@ function revalidateTicket() {
         alert('An error occurred while revalidating the ticket.');
     });
 }
+
+// Function to toggle alphabetise value in localStorage
+function toggleAlphabetise() {
+    const currentValue = localStorage.getItem('alphabetise');
+    const newValue = currentValue === 'true' ? 'false' : 'true';
+    localStorage.setItem('alphabetise', newValue);
+}
+
+// Function to update button text based on alphabetise value
+function updateButtonText() {
+    const alphabetise = localStorage.getItem('alphabetise');
+    const button = document.getElementById('changeSortButton');
+    const buttonText = document.getElementById('changeSortSpan');
+
+    if (alphabetise === 'true') {
+        buttonText.textContent = 'Sort by Recency';
+    } else {
+        buttonText.textContent = 'Sort Alphabetically';
+    }
+}
+
+// Function to handle button click event
+function changeSort() {
+    toggleAlphabetise();
+    window.location.reload();
+}
+
+// Call updateButtonText initially to set the button text based on the initial value of alphabetise
+updateButtonText();
